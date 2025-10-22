@@ -17,8 +17,12 @@ export default defineConfig([
   },
   {
     rules: {
-      "no-unused-vars": "warn",
-      "no-undef": "warn",
+      'no-unused-vars': 'warn',
+      'no-undef': 'warn',
+      'prefer-const': 'error',
+      'no-console': 'warn',
+      '@typescript-eslint/no-explicit-any': 'warn',
+      '@typescript-eslint/no-namespace': 'off',
     },
   },
   {
