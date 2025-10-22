@@ -22,6 +22,27 @@ const createCourse = async (req: Request, res: Response) => {
   }
 };
 
+
+
+const getAllCourse = async (req: Request, res: Response) => {
+  try {
+    const result = await CourseServices.getAllCourseIntoDB();
+    res.status(200).json({
+      success: true,
+      messaage: 'Courses retrive successfully',
+      data: result,
+    });
+  } catch (error: any) {
+    res.status(500).json({
+      success: false,
+      messaage: 'Failed to retrive course',
+      error: error,
+    });
+  }
+};
+
+
 export const CourseController = {
   createCourse,
+  getAllCourse,
 };
