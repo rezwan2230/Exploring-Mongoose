@@ -7,4 +7,6 @@ router.post('/create-course', CourseController.createCourse);
 
 router.get('/', CourseController.getAllCourse);
 
+router.get('/:courseId', CourseController.getSingleCourse);
+
 export const CourseRouter = router;

@@ -14,8 +14,13 @@ const getAllCourseIntoDB = async () => {
   return result;
 };
 
+const getSingleCourseIntoDB = async (courseId: string) => {
+  const result = await Course.findOne({ courseId });
+  return result;
+};
 
 export const CourseServices = {
   createCourseIntoDB,
-  getAllCourseIntoDB
+  getAllCourseIntoDB,
+  getSingleCourseIntoDB,
 };
