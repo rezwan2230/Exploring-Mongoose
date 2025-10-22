@@ -32,6 +32,7 @@ export type TLesson = {
 
 export type TCourse = {
   courseId: string;
+  password: string;
   title: string;
   instructor: TInstructor;
   description: string;

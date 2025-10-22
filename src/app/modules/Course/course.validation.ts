@@ -51,6 +51,12 @@ const lessonValidationSchema = z.object({
 // Course validation
 const courseValidationSchema = z.object({
   courseId: z.string().trim().nonempty('Course ID is required'),
+  password: z
+    .string()
+    .trim()
+    .min(5, 'Password must be at least 5 characters')
+    .max(20, 'Password cannot exceed 20 characters')
+    .nonempty('Password is required'),
   title: z.string().trim().nonempty('Course title is required'),
   instructor: instructorValidationSchema,
   description: z.string().trim().nonempty('Course description is required'),

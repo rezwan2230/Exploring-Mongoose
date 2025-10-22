@@ -1,4 +1,5 @@
 import { Schema, model } from 'mongoose';
+import bcrypt from 'bcrypt';
 import {
   CourseModel,
   TCourse,
@@ -6,6 +7,7 @@ import {
   TLesson,
   TSocialLinks,
 } from './course.interface';
+import config from '../../config';
 
 const socialLinksSchema = new Schema<TSocialLinks>({
   facebook: { type: String, trim: true, unique: true },
@@ -75,6 +77,13 @@ const courseSchema = new Schema<TCourse, CourseModel>({
     unique: true,
     trim: true,
   },
+  password: {
+    type: String,
+    required: [true, 'Password is required'],
+    minlength: [5, 'Password must be at least 5 characters'],
+    maxlength: [20, 'Password cannot exceed 20 characters'],
+    trim: true,
+  },
   title: {
     type: String,
     required: [true, 'Course title is required'],
@@ -138,5 +147,20 @@ courseSchema.statics.isCourseExist = async function (courseId: string) {
   const isExist = await Course.findOne({ courseId });
   return isExist;
 };
+
+courseSchema.pre('save', async function (next) {
+  // eslint-disable-next-line @typescript-eslint/no-this-alias
+  const user = this;
+  user.password = await bcrypt.hash(
+    user.password,
+    Number(config.bcrypt_salt_round),
+  );
+  next();
+});
+
+courseSchema.post('save', function (doc, next) {
+  doc.password = '';
+  next();
+});
 
 export const Course = model<TCourse, CourseModel>('course', courseSchema);
