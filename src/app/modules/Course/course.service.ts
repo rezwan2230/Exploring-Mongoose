@@ -19,8 +19,14 @@ const getSingleCourseIntoDB = async (courseId: string) => {
   return result;
 };
 
+const deleteSingleCourseIntoDB = async (courseId: string) => {
+  const result = await Course.updateOne({ courseId }, { isDeleted: true });
+  return result;
+};
+
 export const CourseServices = {
   createCourseIntoDB,
   getAllCourseIntoDB,
   getSingleCourseIntoDB,
+  deleteSingleCourseIntoDB,
 };

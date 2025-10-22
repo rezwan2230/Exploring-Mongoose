@@ -163,4 +163,19 @@ courseSchema.post('save', function (doc, next) {
   next();
 });
 
+courseSchema.pre('find', function (next) {
+  this.find({ isDeleted: { $ne: true } });
+  next();
+});
+
+courseSchema.pre('findOne', function (next) {
+  this.findOne({ isDeleted: { $ne: true } });
+  next();
+});
+
+courseSchema.pre('aggregate', function (next) {
+  this.pipeline().unshift({ $match: { isDeleted: { $ne: true } } });
+  next();
+});
+
 export const Course = model<TCourse, CourseModel>('course', courseSchema);

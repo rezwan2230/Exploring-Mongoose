@@ -57,8 +57,27 @@ const getSingleCourse = async (req: Request, res: Response) => {
   }
 };
 
+const deleteSingleCourse = async (req: Request, res: Response) => {
+  try {
+    const { courseId } = req.params;
+    const result = await CourseServices.deleteSingleCourseIntoDB(courseId!);
+    res.status(200).json({
+      success: true,
+      message: 'Course delete successfully',
+      data: result,
+    });
+  } catch (error: any) {
+    res.status(500).json({
+      success: false,
+      message: "Something went wrong, Course can't be deleted",
+      data: error,
+    });
+  }
+};
+
 export const CourseController = {
   createCourse,
   getAllCourse,
   getSingleCourse,
+  deleteSingleCourse,
 };
